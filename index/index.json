@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mpp-video": "/components/component-tag-name"
+  }
+}

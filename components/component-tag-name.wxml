@@ -1,0 +1,182 @@
+<!-- 组件模板 -->
+<view style="display: flex">
+    <!-- src="https://vod3.pipi.cn/43903a81vodtransgzp1251246104/8bdab563387702298286599171/v.f42905.mp4" -->
+  <video 
+    src="{{src}}"
+    style="height: 100vh; width: 100%;" 
+    autoplay="{{false}}" 
+    enable-progress-gesture="{{true}}"
+    enable-play-gesture="{{true}}" 
+    show-play-btn="{{false}}" 
+    id="video_player" 
+    class="video_player" 
+    title="{{title}}"
+    bindtimeupdate="videoUpdate" 
+    show-play-btn="{{true}}" 
+    show-center-play-btn="{{false}}"
+    show-fullscreen-btn="{{true}}" 
+    enable-play-gesture="{{true}}" 
+    show-fullscreen-btn="{{true}}" 
+    duration="{{false}}"
+    controls="{{!isFullscreen}}" 
+    danmu-btn="{{false}}" 
+    enable-danmu="{{false}}"
+    bindfullscreenchange="handleFullscreenChanged" 
+    bindended="handleEnded" 
+    bindwaiting="bindwaiting"
+    binderror="binderror"
+    bindplay="bindplay"
+    bindpause="bindpause"
+    > 
+     <view wx:if="{{isFullscreen}}">
+      <view wx:if="{{btnUnvisible}}" id="btnbox">
+        <!-- 暂停、播放 -->
+          <view class="control-icon" wx-if="{{btnVisible}}">
+            <image hidden="{{isPlay}}" src="./play.png" catchtap="handlePlay"
+            class="btnCtrl"
+            ></image>
+            <image hidden="{{!isPlay}}" src="./pause.png" catchtap="handlePause"
+            class="btnCtrl"
+            ></image>
+          </view>
+          <view class="control-icon" wx:else="{{!btnVisible}}">
+            <image src="./replay.png" catchtap="handlePlay"
+            class="btnCtrl"
+            ></image>
+          </view>   
+      </view>   
+        <view wx:if="{{popTips}}" class="popTips">
+        {{popTipsText}}
+        </view>
+        <!-- 弹框 -->
+        <view class="popvideo"  
+          wx:if="{{!popupFlagbox}}">
+          <!-- 剧集 -->
+          <view wx:if="{{seriesFlag}}"
+            class="popcss">
+            <view class="speedwords">
+                <view class="title">
+                {{seriesFlag?'选集':''}} <text class="total">共<text class="total2">{{data.episodes.length}}</text>集</text>
+                </view>
+                <view class="close" catchtap="closeHander">X</view>
+            </view>
+            <view class="jujiBox">
+              <view 
+              data-index="{{index}}"
+              catchtap="jujiHandle"       
+              wx:for="{{seriesFlag?data.episodes:''}}" 
+              class="popItem {{selectIndex === index?'check':''}} {{speedFlag?'speedbox':''}} {{resolutionFlag?'speedbox':''}} {{seriesFlag&&(data.episodes[0].title)?'seriesFlagbox':'seriesFlagbox2'}} {{seriesType === 2?'gridClass':''}} "
+              wx:key="index">  
+              <view wx:if="{{(seriesFlag) && item.title}}" class="titleBox"> 
+                  <text wx:if="{{item}}" class="jujiTitle">{{index<9 ? '0'+(index+1): (index+1)}}</text>            
+                  <image wx:if="{{item.tags[0]}}" src="{{item.tags[0]}}" class="img"></image>
+                  <image wx:if="{{item.tags[1]}}" src="{{item.tags[1]}}" class="img"></image>
+                  <image wx:if="{{item.tags[2]}}" src="{{item.tags[2]}}" class="img"></image>            
+                  <text class="jujiRow">{{item.title}}</text>
+                  <text class="time">{{item.time}}</text>
+              </view>
+              <view wx:if="{{(seriesFlag) && !item.title}}" class="jujiItem">
+                <text class="">{{index+1}}</text>
+              </view>
+              </view>
+            </view>
+          </view>
+          <!-- 倍速 -->
+          <view wx:if="{{speedFlag}}"
+          class="popcss">
+            <view class="speedwords">
+                <view class="title">
+                {{speedFlag?'倍速':''}} 
+                </view>
+                <view class="close" catchtap="closeHander">X</view>
+            </view>
+            <view class="jujiBox jujiBox2">
+              <view 
+              data-index="{{index}}"
+              catchtap="jujiHandle"       
+              wx:for="{{speedFlag?data.playbackRate:''}}" 
+              class="itemcss popItem {{selectIndex === index?'check':''}} {{speedFlag?'speedbox':''}} "
+              wx:key="index">  
+                {{item}}
+              </view>
+            </view>
+          </view>
+          <!-- 分辨率 -->
+          <view wx:if="{{resolutionFlag}}"
+          class="popcss">
+            <view class="speedwords">
+                <view class="title">
+                {{resolutionFlag?'画质':''}} 
+                </view>
+                <view class="close" catchtap="closeHander">X</view>
+            </view>
+            <view class="jujiBox jujiBox2">
+              <view 
+              data-index="{{index}}"
+              catchtap="jujiHandle"       
+              wx:for="{{resolutionFlag?data.resolutions:''}}" 
+              class="itemcss popItem {{selectIndex === index?'check':''}} {{resolutionFlag?'speedbox':''}} "
+              wx:key="index">  
+                {{item}}
+              </view>
+            </view>
+          </view>
+        </view>    
+        <!-- 控制面板 -->
+        <view wx:if="{{popupFlagbox}}"
+          class="wrapper" style="width: 100%;position: absolute;bottom: 20px; ">         
+            <!-- 进度条，时间，拖动 -->
+            <view class='slider-container' style="clear: both;display: flex;width: 100%;">
+             <slider 
+                style="min-width: 30px;width: 100%; margin-bottom: 0px;"
+                bindchange="sliderChange" 
+                bindchanging="sliderChanging" 
+                step="1" value="{{sliderValue}}" 
+                block-size="12"
+                backgroundColor="#262626" 
+                activeColor="#fff" 
+                block-color="#fff"
+                >
+              </slider>
+            </view> 
+            <view style="display: flex;clear: both;width: 90%; text-align: center;   align-items: center;vertical-align: middle;margin: 0 5%;">
+                <!-- 弹幕 -->
+                <!-- <view>
+                  <view class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch">
+                    <em>OFF</em>
+                    <i></i>
+                  </view>
+                </view> -->
+                <!-- 全屏 -->
+                <view catchtap="outFullScreen" class="outFullScreen">
+                   <image src="./screen.png" class="fullBtn" ></image>
+                </view>               
+                <!-- 剧集 分辨率 倍速  -->
+                <view
+                  catchtap="seriesHander"
+                  class="xuanji">
+                  选集
+                </view>
+                <view class="fenbianSpeedBox" >
+                    <view
+                      class="btncss speedDiv xuanji"
+                      catchtap="speedHander"
+                      >
+                    {{speedText}}x
+                    </view>  
+                    <view
+                      class="btncss xuanji"
+                      catchtap="resolutionHander"
+                      style="margin-left: 10px;">
+                    {{resolutionText}}
+                    </view>  
+                </view>
+                <!-- 播放时间、总时间 -->
+                <view style="color: #fff" wx:if="{{duration}}">
+                  <text style="color: #fff;margin-top: 15px;">{{playvalue}}</text><text style="color: gray;margin-top: 15px">/{{duration}}</text>
+                </view>
+            </view>
+        </view>
+      </view>
+  </video>
+</view>
