@@ -49,10 +49,10 @@ Component({
       })
     },
     bindwaiting() {
-      wx.showModal({ content: '网络加载/异常' })
+      // wx.showModal({ content: '网络加载/异常' })
     },
     binderror() {
-      wx.showModal({ content: '网络加载中' })
+      // wx.showModal({ content: '网络加载中' })
     },
     videoUpdate(e) {
       let sliderValue = parseInt(e.detail.currentTime / parseInt(e.detail.duration) * 100);

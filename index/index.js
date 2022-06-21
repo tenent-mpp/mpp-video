@@ -23,6 +23,7 @@ Page({
   },  
   // 父组件start
   onLoad: function () {
+    console.log('target')
   },
   methods: {
 
