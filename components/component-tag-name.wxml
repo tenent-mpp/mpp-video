@@ -28,7 +28,8 @@
     bindplay="bindplay"
     bindpause="bindpause"
     > 
-     <view wx:if="{{isFullscreen}}">
+     <view wx:if="{{isFullscreen}}"
+      class="isFullscreen">
       <view wx:if="{{btnUnvisible}}" id="btnbox">
         <!-- 暂停、播放 -->
           <view class="control-icon" wx-if="{{btnVisible}}">
@@ -56,6 +57,7 @@
         </view>
         <!-- 弹框 -->
         <view class="popvideo"  
+          data-id="popvideo"
           wx:if="{{!popupFlagbox}}">
           <!-- 剧集 -->
           <view wx:if="{{seriesFlag}}"
@@ -69,7 +71,7 @@
             <view class="jujiBox">
               <view 
               data-index="{{index}}"
-              catchtap="jujiHandle"       
+              catchtap="itemHandle"       
               wx:for="{{seriesFlag?data.episodes:''}}" 
               class="popItem {{selectIndex === index?'check':''}} {{speedFlag?'speedbox':''}} {{resolutionFlag?'speedbox':''}} {{seriesFlag&&(data.episodes[0].title)?'seriesFlagbox':'seriesFlagbox2'}} {{seriesType === 2?'gridClass':''}} "
               wx:key="index">  
@@ -99,7 +101,7 @@
             <view class="jujiBox jujiBox2">
               <view 
               data-index="{{index}}"
-              catchtap="jujiHandle"       
+              catchtap="itemHandle"       
               wx:for="{{speedFlag?data.playbackRate:''}}" 
               class="itemcss popItem {{selectIndex === index?'check':''}} {{speedFlag?'speedbox':''}} "
               wx:key="index">  
@@ -119,7 +121,7 @@
             <view class="jujiBox jujiBox2">
               <view 
               data-index="{{index}}"
-              catchtap="jujiHandle"       
+              catchtap="itemHandle"       
               wx:for="{{resolutionFlag?data.resolutions:''}}" 
               class="itemcss popItem {{selectIndex === index?'check':''}} {{resolutionFlag?'speedbox':''}} "
               wx:key="index">  
@@ -128,6 +130,10 @@
             </view>
           </view>
         </view>    
+        <!-- 蒙层 -->
+        <view class="mask"  
+          catchtap="closeHander"
+          wx:if="{{!popupFlagbox}}"></view>
         <!-- 控制面板 -->
         <view wx:if="{{popupFlagbox}}"
           class="wrapper" style="width: 100%;position: absolute;bottom: 20px; ">         

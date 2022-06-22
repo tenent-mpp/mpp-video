@@ -76,7 +76,7 @@ Component({
         isFullscreen: false
       });
     },
-    jujiHandle(e) {
+    itemHandle(e) {
       let { index } = e.currentTarget.dataset
       if(this.data.speedFlag){ //倍速播放
         this.videoContext.playbackRate(this.properties.data.playbackRate[index])
@@ -185,7 +185,7 @@ Component({
         seriesFlag: false,
         speedFlag: true,
       })
-    },
+    },    
     closeHander: function () {
       this.data.popupFlagbox = true;
       this.setData({
