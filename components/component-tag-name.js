@@ -24,6 +24,7 @@ Component({
     resolutionFlag: false,
     seriesFlag: false,
     updateState: false, //防止视频播放过程中导致的拖拽失效
+    durationOrigin:'', //原始视频时间
   },
   lifetimes: {
     attached() {
@@ -56,6 +57,7 @@ Component({
     },
     videoUpdate(e) {
       let sliderValue = parseInt(e.detail.currentTime / parseInt(e.detail.duration) * 100);
+      this.data.durationOrigin = e.detail.duration
       let h = parseInt(e.detail.duration / 60) == 0 ? '00' :
         parseInt(e.detail.duration / 60) < 10 ? '0' + parseInt(e.detail.duration / 60) : parseInt(e.detail.duration / 60);
       let m = parseInt(e.detail.duration % 60) < 10 ? '0' + parseInt(e.detail.duration % 60) : parseInt(e.detail.duration % 60);
@@ -130,9 +132,8 @@ Component({
       })
     },
     sliderChange(e) { //能进入
-      let durationOrigin = parseInt(wx.getStorageSync("durationOrigin"));
       if (this.data.duration) {
-        this.videoContext.seek(e.detail.value / 100 * durationOrigin); //完成拖动后，计算对应时间并跳转到指定位置
+        this.videoContext.seek(e.detail.value / 100 * (this.data.durationOrigin)); //完成拖动后，计算对应时间并跳转到指定位置
         this.setData({
           sliderValue: e.detail.value,
           updateState: true //完成拖动后允许更新滚动条
@@ -145,7 +146,7 @@ Component({
       this.videoContext = wx.createVideoContext('video_player',this)      
       this.videoContext.play();
       this.setData({ // 隐藏播放，显示暂停
-        isPlay: !this.data.isPlay,
+        isPlay: true,//显示暂停
         btnVisible: true,
       })
     },

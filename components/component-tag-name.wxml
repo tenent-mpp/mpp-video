@@ -32,17 +32,23 @@
       <view wx:if="{{btnUnvisible}}" id="btnbox">
         <!-- 暂停、播放 -->
           <view class="control-icon" wx-if="{{btnVisible}}">
-            <image hidden="{{isPlay}}" src="./play.png" catchtap="handlePlay"
-            class="btnCtrl"
-            ></image>
-            <image hidden="{{!isPlay}}" src="./pause.png" catchtap="handlePause"
-            class="btnCtrl"
-            ></image>
+            <view class="control-icon" hidden="{{isPlay}}"  catchtap="handlePlay">
+              <image src="./play.png" 
+              class="btnCtrl"
+              ></image>
+            </view>
+            <view class="control-icon" hidden="{{!isPlay}}" catchtap="handlePause">
+              <image src="./pause.png" 
+              class="btnCtrl"
+              ></image>
+            </view>
           </view>
           <view class="control-icon" wx:else="{{!btnVisible}}">
-            <image src="./replay.png" catchtap="handlePlay"
-            class="btnCtrl"
-            ></image>
+            <view class="control-icon" catchtap="handlePlay">
+              <image src="./replay.png"
+              class="btnCtrl"
+              ></image>
+            </view>   
           </view>   
       </view>   
         <view wx:if="{{popTips}}" class="popTips">
