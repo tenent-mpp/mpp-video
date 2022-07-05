@@ -41,7 +41,7 @@ Component({
     handleFullscreenChanged(e) {
       let videoContext = wx.createVideoContext('video_player',this)      
       this.setData({
-        isFullscreen: !this.isFullscreen
+        isFullscreen: e.detail.fullscreen
       });
     },
     handleEnded() {

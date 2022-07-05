@@ -19,6 +19,7 @@
     show-fullscreen-btn="{{true}}" 
     duration="{{false}}"
     controls="{{!isFullscreen}}" 
+    enableFullScreen="{{isFullscreen}}"
     danmu-btn="{{false}}" 
     enable-danmu="{{false}}"
     bindfullscreenchange="handleFullscreenChanged" 
@@ -160,7 +161,7 @@
                   </view>
                 </view> -->
                 <!-- 全屏 -->
-                <view catchtap="outFullScreen" class="outFullScreen">
+                <view catchtap="outFullScreen" class="outFullScreen" data-closepopup>
                    <image src="./screen.png" class="fullBtn" ></image>
                 </view>               
                 <!-- 剧集 分辨率 倍速  -->
