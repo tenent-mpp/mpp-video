@@ -241,12 +241,14 @@
 }
 .control-icon{
     position: absolute;
-    left: calc(50% - 20px);
-    top: calc(50% - 20px);
+    /* left: calc(50% - 20px);
+    top: calc(50% - 20px); */
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
+    height:  calc(100vh - 20px);
+    width: 100vw;
 }
 .outFullScreen{
   width: 50px;
@@ -267,9 +269,8 @@
   text-align: center;
 }
 .btnCtrl {
-  width: 40px; height: 40px; 
-  /* background-color: #eeeeee; */
-  margin-right: 10px;
+  width: 40px; 
+  height: 40px; 
 }
 .jujiItem{
   height: 4vh;
@@ -313,4 +314,11 @@
 }
 .fenbianSpeedBox {
   width: 80%; display: flex;text-align: center;align-items:center; vertical-align: middle;  align-content: space-between; justify-content: center;
+}
+.mask{
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 50vw;
+  height: 100vh;
 }
