@@ -19,7 +19,7 @@
     show-fullscreen-btn="{{true}}" 
     duration="{{false}}"
     controls="{{!isFullscreen}}" 
-    enableFullScreen="{{isFullscreen}}"
+    alwaysShowBar="{{alwaysShowBar}}"
     danmu-btn="{{false}}" 
     enable-danmu="{{false}}"
     bindfullscreenchange="handleFullscreenChanged" 
@@ -28,6 +28,7 @@
     binderror="binderror"
     bindplay="bindplay"
     bindpause="bindpause"
+    bindonnext="handleonnext"
     > 
      <view wx:if="{{isFullscreen}}"
       class="isFullscreen">
