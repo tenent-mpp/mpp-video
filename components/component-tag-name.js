@@ -8,6 +8,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    alwaysShowBar:false,
     btnUnvisible:true,
     popTips:false,
     popTipsText:'',
@@ -44,6 +45,8 @@ Component({
         isFullscreen: e.detail.fullscreen
       });
     },
+    handleonnext(e) {
+    },
     handleEnded() {
       this.setData({
         btnVisible: false,
@@ -71,10 +74,12 @@ Component({
         duration: h + ":" + m
       })
     },
-    outFullScreen(){
+    outFullScreen() {
+      this.videoContext = wx.createVideoContext('video_player',this)
       this.setData({
         isFullscreen: false
       });
+      this.videoContext.exitFullScreen();
     },
     itemHandle(e) {
       let { index } = e.currentTarget.dataset
@@ -160,6 +165,7 @@ Component({
     },
     seriesHander: function () {
       this.setData({ //不是wx.setData
+        alwaysShowBar:true,
         btnUnvisible:false,
         popupFlagbox: false, //控制面板
         resolutionFlag: false,//分辨率弹框不显示
@@ -173,6 +179,7 @@ Component({
         btnUnvisible:false,
         popupFlagbox: false, //控制面板
         resolutionFlag: true,
+        alwaysShowBar:false,
         seriesFlag: false,
         speedFlag: false,
       })
@@ -182,6 +189,7 @@ Component({
         btnUnvisible:false,
         popupFlagbox: false, //控制面板
         resolutionFlag: false,
+        alwaysShowBar:false,
         seriesFlag: false,
         speedFlag: true,
       })
