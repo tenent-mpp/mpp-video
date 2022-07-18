@@ -1,5 +1,5 @@
 # mpp-video
-小场景视频播放器组件示例
+##小场景视频播放器组件示例
 <br/>
 使用方式：
 <br/>
@@ -29,3 +29,17 @@ playbackRate<br/>
 <br/>
 resolutions<br/>
 可选的分辨率，例如["1080P","720P"]<br/>
+
+## 小场景video组件私有API
+<br/>
+属性<br/>
+alwaysShowBar<br/>
+是否自动隐藏控制面板<br/>
+bindonnext/bindonprev<br/>
+系统发起切换上下集的回调，小程序需要在回调中切换src<br/><br/>
+VideoContext<br/>
+changeRes(url)<br/>
+切换同一个剧集的不同分辨率
+
+
+
